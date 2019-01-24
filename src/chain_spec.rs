@@ -89,7 +89,7 @@ fn testnet_genesis(initial_authorities: Vec<Ed25519AuthorityId>, /* endowed_acco
 			period: 5,					// 5 second block time.
 		}),
 		indices: Some(IndicesConfig {
-			ids: endowed_accounts.clone(),
+			ids: Vec::new(), // endowed_accounts.clone(),
 		}),
 		sudo: Some(SudoConfig {
 			key: root_key,
