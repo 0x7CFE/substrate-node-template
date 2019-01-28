@@ -25,7 +25,7 @@ sr-primitives = { git = "https://github.com/paritytech/substrate", default-featu
 srml-system = { git = "https://github.com/paritytech/substrate", default-features = false }
 srml-timestamp = { git = "https://github.com/paritytech/substrate", default-features = false }
 srml-sudo = { git = "https://github.com/paritytech/substrate", default-features = false }
-substrate-client = { git = "https://github.com/paritytech/substrate", optional = true }
+substrate-client = { git = "https://github.com/paritytech/substrate", default-features = false }
 sr-version = { git = "https://github.com/paritytech/substrate", default-features = false }
 substrate-consensus-aura-primitives = { git = "https://github.com/paritytech/substrate", default-features = false }
 
@@ -38,7 +38,7 @@ std = [
 	"parity-codec-derive/std",
 	"substrate-primitives/std",
 	"substrate-keyring",
-	"substrate-client",
+	"substrate-client/std",
 	"sr-std/std",
 	"sr-io/std",
 	"srml-consensus/std",
@@ -55,6 +55,5 @@ std = [
 	"serde_derive",
 	"serde",
 	"safe-mix/std",
-	"substrate-client",
 	"substrate-consensus-aura-primitives/std",
 ]
