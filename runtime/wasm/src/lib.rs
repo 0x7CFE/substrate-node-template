@@ -14,7 +14,7 @@
  // You should have received a copy of the GNU General Public License
 // along with Substrate.  If not, see <http://www.gnu.org/licenses/>.
 
-// ! The Substrate runtime reexported for WebAssembly compile.
+//! The Substrate runtime reexported for WebAssembly compile.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
