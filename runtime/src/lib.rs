@@ -38,7 +38,7 @@ use primitives::bytes;
 use primitives::{Ed25519AuthorityId, OpaqueMetadata};
 use runtime_primitives::{
 	ApplyResult, transaction_validity::TransactionValidity, Ed25519Signature, generic,
-	traits::{self, BlakeTwo256, Block as BlockT, StaticLookup, Extrinsic},
+	traits::{self, BlakeTwo256, Block as BlockT, StaticLookup},
 };
 use client::{
 	block_builder::api::{CheckInherentsResult, InherentData, self as block_builder_api},
@@ -47,7 +47,6 @@ use client::{
 use version::RuntimeVersion;
 #[cfg(feature = "std")]
 use version::NativeVersion;
-use consensus_aura::api as aura_api;
 
 // A few exports that help ease life for downstream crates.
 #[cfg(any(feature = "std", test))]
@@ -396,7 +395,7 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl aura_api::AuraApi<Block> for Runtime {
+	impl consensus_aura::AuraApi<Block> for Runtime {
 		fn slot_duration() -> u64 {
 			Aura::slot_duration()
 		}

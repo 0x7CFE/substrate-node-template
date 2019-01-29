@@ -26,16 +26,9 @@ native_executor_instance!(
 	include_bytes!("../runtime/wasm/target/wasm32-unknown-unknown/release/template_node_runtime.compact.wasm")
 );
 
+#[derive(Default)]
 pub struct NodeConfig {
 	inherent_data_providers: InherentDataProviders,
-}
-
-impl Default for NodeConfig {
-	fn default() -> Self {
-		NodeConfig {
-			inherent_data_providers: InherentDataProviders::new(),
-		}
-	}
 }
 
 construct_simple_protocol! {
@@ -93,6 +86,8 @@ construct_service_factory! {
 			{ |config: &mut FactoryFullConfiguration<Self> , client: Arc<FullClient<Self>>|
 				import_queue(
 					SlotDuration::get_or_compute(&*client)?,
+					client.clone(),
+					None,
 					client,
 					NothingExtra,
 					config.custom.inherent_data_providers.clone(),
@@ -106,6 +101,8 @@ construct_service_factory! {
 			{ |config: &mut FactoryFullConfiguration<Self>, client: Arc<LightClient<Self>>|
 				import_queue(
 					SlotDuration::get_or_compute(&*client)?,
+					client.clone(),
+					None,
 					client,
 					NothingExtra,
 					config.custom.inherent_data_providers.clone(),
