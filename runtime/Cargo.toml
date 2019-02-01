@@ -7,10 +7,10 @@ authors = ["Parity Technologies <admin@parity.io>"]
 rustc-hex = { version = "1.0", optional = true }
 hex-literal = { version = "0.1.0", optional = true }
 serde = { version = "1.0", optional = true }
-serde_derive = { version = "1.0" }
+serde_derive = { version = "1.0", optional = true }
 safe-mix = { version = "1.0", default-features = false }
 parity-codec = { version = "2.0", default-features = false }
-parity-codec-derive = "2.0"
+parity-codec-derive = { version = "2.0", default-features = false }
 sr-std = { git = "https://github.com/paritytech/substrate", default-features = false }
 sr-io = { git = "https://github.com/paritytech/substrate", default-features = false }
 srml-support = { git = "https://github.com/paritytech/substrate", default-features = false }
@@ -32,11 +32,16 @@ substrate-consensus-aura-primitives = { git = "https://github.com/paritytech/sub
 [features]
 default = ["std"]
 std = [
+	"rustc-hex",
+	"hex-literal",
 	"parity-codec/std",
+	"parity-codec-derive/std",
 	"substrate-primitives/std",
+	"substrate-keyring",
 	"substrate-client/std",
 	"sr-std/std",
 	"sr-io/std",
+	"srml-consensus/std",
 	"srml-support/std",
 	"srml-balances/std",
 	"srml-executive/std",
@@ -47,7 +52,8 @@ std = [
 	"srml-timestamp/std",
 	"srml-sudo/std",
 	"sr-version/std",
-	"serde/std",
+	"serde_derive",
+	"serde",
 	"safe-mix/std",
 	"substrate-consensus-aura-primitives/std",
 	"hex-literal",

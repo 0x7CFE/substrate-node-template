@@ -8,7 +8,7 @@ name = "template_node_runtime"
 crate-type = ["cdylib"]
 
 [dependencies]
-template-node-runtime = { path = "..", default-features = false}
+template-node-runtime = { path = "..", default-features = false }
 
 [features]
 default = []
