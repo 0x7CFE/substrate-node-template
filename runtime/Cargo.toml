@@ -56,4 +56,8 @@ std = [
 	"serde",
 	"safe-mix/std",
 	"substrate-consensus-aura-primitives/std",
+	"hex-literal",
+	"rustc-hex",
+	"serde",
+	"substrate-keyring",
 ]

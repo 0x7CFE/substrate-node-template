@@ -13,7 +13,7 @@ template-node-runtime = { path = "..", default-features = false }
 [features]
 default = []
 std = [
-	"template-node-runtime/std",
+	"template-node-runtime/std"
 ]
 
 [profile.release]
