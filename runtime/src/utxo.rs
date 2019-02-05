@@ -80,7 +80,7 @@ decl_module! {
 			Ok(())
 		}
 
-		/// Hanler called by the system on block finalization
+		/// Handler called by the system on block finalization
 		fn on_finalise() {
 			let authorities: Vec<_> = Consensus::authorities().iter().map(|&a| a.into()).collect();
 			Self::spend_leftover(&authorities);
@@ -133,26 +133,6 @@ pub enum CheckInfo<'a> {
 pub type CheckResult<'a> = rstd::result::Result<CheckInfo<'a>, &'static str>;
 
 impl<T: Trait> Module<T> {
-	fn lock_utxo(hash: &H256, until: Option<T::BlockNumber>) -> Result {
-		ensure!(!<LockedOutputs<T>>::exists(hash), "utxo is already locked");
-		ensure!(<UnspentOutputs<T>>::exists(hash), "utxo does not exist");
-
-		if let Some(until) = until {
-			ensure!(until > <system::Module<T>>::block_number(), "block number is in the past");
-			<LockedOutputs<T>>::insert(hash, LockStatus::LockedUntil(until));
-		} else {
-			<LockedOutputs<T>>::insert(hash, LockStatus::Locked);
-		}
-
-		Ok(())
-	}
-
-	fn unlock_utxo(hash: &H256) -> Result {
-		ensure!(<LockedOutputs<T>>::exists(hash), "utxo is not locked");
-		<LockedOutputs<T>>::remove(hash);
-		Ok(())
-	}
-
 	/// Check transaction for validity.
 	///
 	/// Ensures that:
@@ -290,6 +270,26 @@ impl<T: Trait> Module<T> {
 	fn deposit_event(event: Event) {
 		let event = <T as Trait>::Event::from(event).into();
 		<system::Module<T>>::deposit_event(event);
+	}
+
+	fn lock_utxo(hash: &H256, until: Option<T::BlockNumber>) -> Result {
+		ensure!(!<LockedOutputs<T>>::exists(hash), "utxo is already locked");
+		ensure!(<UnspentOutputs<T>>::exists(hash), "utxo does not exist");
+
+		if let Some(until) = until {
+			ensure!(until > <system::Module<T>>::block_number(), "block number is in the past");
+			<LockedOutputs<T>>::insert(hash, LockStatus::LockedUntil(until));
+		} else {
+			<LockedOutputs<T>>::insert(hash, LockStatus::Locked);
+		}
+
+		Ok(())
+	}
+
+	fn unlock_utxo(hash: &H256) -> Result {
+		ensure!(<LockedOutputs<T>>::exists(hash), "utxo is not locked");
+		<LockedOutputs<T>>::remove(hash);
+		Ok(())
 	}
 
 	/// DANGEROUS! Adds specified output to the storage potentially overwriting existing one.
