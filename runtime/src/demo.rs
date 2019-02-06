@@ -5,7 +5,6 @@ use parity_codec::Encode;
 use srml_support::{StorageValue, dispatch::Result};
 use runtime_primitives::traits::Hash;
 use {balances, system::{self, ensure_signed}};
-use rstd::prelude::*;
 
 pub trait Trait: balances::Trait {}
 
